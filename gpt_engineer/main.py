@@ -26,7 +26,8 @@ def main(
 ):
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
-    model = fallback_model(model)
+    # model = fallback_model(model)
+    model = "gpt-3.5-turbo"
     ai = AI(
         model=model,
         temperature=temperature,

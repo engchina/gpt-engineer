@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import logging
+import os
 
 from dataclasses import dataclass
 from typing import Dict, List
+
+from dotenv import load_dotenv, find_dotenv
 
 import openai
 import tiktoken
@@ -23,7 +26,8 @@ class TokenUsage:
 
 
 class AI:
-    def __init__(self, model="gpt-4", temperature=0.1):
+    # def __init__(self, model="gpt-4", temperature=0.1):
+    def __init__(self, model="gpt-3.5-turbo", temperature=0.1):
         self.temperature = temperature
         self.model = model
 
@@ -61,6 +65,10 @@ class AI:
         return {"role": "assistant", "content": msg}
 
     def next(self, messages: List[Dict[str, str]], prompt=None, *, step_name=None):
+        _ = load_dotenv(find_dotenv())
+        openai.api_key = os.environ["OPENAI_API_KEY"]
+        openai.api_base = os.environ["OPENAI_API_BASE"]
+
         if prompt:
             messages += [{"role": "user", "content": prompt}]
 
